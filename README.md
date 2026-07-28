@@ -12,6 +12,7 @@ Small Python scrapers for collecting multimodal image-question datasets from pub
 - `kensquiz/kensquiz_handout_scraper.py`: collects Ken's Quiz pub quiz handout picture rounds and cropped image tiles.
 - `nasa/nasa_apod_scraper.py`: collects Astronomy Picture of the Day image records from NASA into `dataset/images/nasa_apod/`.
 - `nasa/nasa_spaceplace_scraper.py`: collects image-based records from NASA Space Place articles.
+- `naep/naep_released_visual_questions_scraper.py`: collects 1,000 public-domain released NAEP assessment questions with required visuals and official answers or scoring criteria. It excludes detected third-party copyrighted stimuli and duplicate NAEP item IDs.
 - `nih/niaid_bioart_scraper.py`: collects public NIH BioArt image records.
 - `plos/plos_research_figure_scraper.py`: collects peer-reviewed PLOS article figures with questions that combine figure legends and abstracts.
 - `quizbowl/quizbowl_picture_rounds_scraper.py`: collects image-based visual bonus questions from multiple real quizbowl packet archive PDFs.
@@ -55,6 +56,7 @@ python3 kensquiz/kensquiz_scraper.py
 python3 kensquiz/kensquiz_handout_scraper.py
 python3 nasa/nasa_apod_scraper.py
 python3 nasa/nasa_spaceplace_scraper.py
+python3 naep/naep_released_visual_questions_scraper.py
 python3 nih/niaid_bioart_scraper.py
 python3 plos/plos_research_figure_scraper.py
 python3 quizbowl/quizbowl_picture_rounds_scraper.py

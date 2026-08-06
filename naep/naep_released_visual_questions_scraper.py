@@ -88,7 +88,12 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Collect public-domain, source-authored visual questions and scoring guides from NAEP."
     )
-    parser.add_argument("--max-items", type=int, default=1000)
+    parser.add_argument(
+        "--max-items",
+        type=int,
+        default=None,
+        help="Stop after this many eligible items (default: collect every eligible item).",
+    )
     parser.add_argument("--max-workers", type=int, default=8)
     parser.add_argument("--refresh", action="store_true", help="Ignore cached API responses.")
     parser.add_argument("--inventory-only", action="store_true", help="Report eligible candidates without downloading media.")
@@ -581,7 +586,7 @@ def remove_unreferenced_assets(records: list[dict[str, Any]]) -> int:
 
 def main() -> int:
     args = parse_args()
-    if args.max_items < 1:
+    if args.max_items is not None and args.max_items < 1:
         raise SystemExit("--max-items must be positive")
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     all_info = cached_json(
@@ -629,7 +634,9 @@ def main() -> int:
         flush=True,
     )
     if args.inventory_only:
-        return 0 if len(candidates) >= args.max_items else 2
+        if args.max_items is not None and len(candidates) < args.max_items:
+            return 2
+        return 0
 
     IMAGES_DIR.mkdir(parents=True, exist_ok=True)
     records: list[dict[str, Any]] = []
@@ -641,7 +648,7 @@ def main() -> int:
             candidates,
         )
         for prepared in prepared_results:
-            if len(records) >= args.max_items:
+            if args.max_items is not None and len(records) >= args.max_items:
                 break
             if not prepared:
                 continue
@@ -656,8 +663,9 @@ def main() -> int:
             if naep_id:
                 naep_ids.add(naep_id)
             if len(records) % 50 == 0:
+                target = str(args.max_items) if args.max_items is not None else "all eligible"
                 print(
-                    f"Accepted and localized {len(records):4d}/{args.max_items} records.",
+                    f"Accepted and localized {len(records):4d}/{target} records.",
                     flush=True,
                 )
 
@@ -666,7 +674,7 @@ def main() -> int:
     print(f"Wrote {len(records)} records to {OUTPUT_JSON.relative_to(ROOT_DIR)}.")
     if removed:
         print(f"Removed {removed} unreferenced NAEP image assets.")
-    if len(records) != args.max_items:
+    if args.max_items is not None and len(records) != args.max_items:
         print(f"Required {args.max_items} records but only produced {len(records)}.", file=sys.stderr)
         return 2
     return 0

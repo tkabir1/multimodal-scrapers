@@ -12,11 +12,12 @@ Small Python scrapers for collecting multimodal image-question datasets from pub
 - `kensquiz/kensquiz_handout_scraper.py`: collects Ken's Quiz pub quiz handout picture rounds and cropped image tiles.
 - `nasa/nasa_apod_scraper.py`: collects Astronomy Picture of the Day image records from NASA into `dataset/images/nasa_apod/`.
 - `nasa/nasa_spaceplace_scraper.py`: collects image-based records from NASA Space Place articles.
-- `naep/naep_released_visual_questions_scraper.py`: collects 1,000 public-domain released NAEP assessment questions with required visuals and official answers or scoring criteria. It excludes detected third-party copyrighted stimuli and duplicate NAEP item IDs.
+- `naep/naep_released_visual_questions_scraper.py`: collects all eligible public-domain released NAEP assessment questions with required visuals and official answers or scoring criteria (currently 1,155). It excludes detected third-party copyrighted stimuli and duplicate NAEP item IDs. Use `--max-items` to request a smaller deterministic prefix.
 - `nih/niaid_bioart_scraper.py`: collects public NIH BioArt image records.
 - `plos/plos_research_figure_scraper.py`: collects peer-reviewed PLOS article figures with questions that combine figure legends and abstracts.
 - `quizbowl/quizbowl_picture_rounds_scraper.py`: collects image-based visual bonus questions from multiple real quizbowl packet archive PDFs.
 - `quizbowl/quizbowl_tossups_scraper.py`: collects real quizbowl tossups from QB Reader packet data.
+- `regents/regents_science_visual_questions_scraper.py`: collects more than 200 visual multiple-choice questions and official answers from archived New York State Regents Living Environment and Earth Science exams. Source pages with detected third-party rights notices are excluded, and records carry NYSED's educational-use restriction and required attribution.
 - `sporcle/sporcle_scraper.py`: collects image-backed trivia prompts from a Sporcle slideshow quiz.
 - `sporcle/sporcle_*_scraper.py`: collect specific Sporcle slideshow quizzes with image-backed prompts. The working Sporcle batch currently targets 13 quizzes, including the actor series plus `Broken Bones by X-Ray` and `Animals with David Attenborough`.
 - `wikipedia/wikipedia_biology_scraper.py`: collects biology-related image records from Wikipedia.
@@ -61,6 +62,7 @@ python3 nih/niaid_bioart_scraper.py
 python3 plos/plos_research_figure_scraper.py
 python3 quizbowl/quizbowl_picture_rounds_scraper.py
 python3 quizbowl/quizbowl_tossups_scraper.py
+python3 regents/regents_science_visual_questions_scraper.py
 python3 sporcle/sporcle_scraper.py
 python3 wikipedia/wikipedia_biology_scraper.py
 ```
